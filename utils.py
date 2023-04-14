@@ -5,15 +5,17 @@ import datetime
 import requests
 
 
-def get_random_header() -> dict | None:
+def get_random_header() -> dict:
     from settings import SCRAPEOPS_API_KEY
+    if not SCRAPEOPS_API_KEY:
+        print("Warning! SCRAPEOPS_API_KEY setting is not defined.")
 
     url = 'http://headers.scrapeops.io/v1/browser-headers?api_key=' + SCRAPEOPS_API_KEY
     response = requests.get(url)
     json_response = response.json()
     header_list = json_response.get('result', None)
 
-    return random.choice(header_list) if header_list else None
+    return random.choice(header_list) if header_list else {}
 
 
 class RequestHistory:
