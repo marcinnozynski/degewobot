@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: degewobot
+spec:
+  schedule: "* 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: degewobot-cronjob
+            image: europe-west3-docker.pkg.dev/degewobot/images/degewobot:latest
+            imagePullPolicy: IfNotPresent
+            command: [ "python" ]
+            args: [ "main.py" ]
+            resources:
+              limits:
+                cpu: 1
+                memory: 256Mi
+              requests:
+                cpu: 200m
+                memory: 128Mi
+          restartPolicy: OnFailure
