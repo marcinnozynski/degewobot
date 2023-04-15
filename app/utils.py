@@ -20,7 +20,7 @@ def get_random_header() -> dict:
 
 class RequestHistory:
     def __init__(self):
-        self.con = sqlite3.connect("database.db")
+        self.con = sqlite3.connect("../database.db")
         self.init_db()
 
     def init_db(self):
