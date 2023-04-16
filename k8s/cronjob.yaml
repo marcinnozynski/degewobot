@@ -3,17 +3,26 @@ kind: CronJob
 metadata:
   name: degewobot
 spec:
-  schedule: "* 0 * * *"
+  schedule: "0 * * * *"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
       template:
         spec:
+          volumes:
+          - name: dagewobot-pv-claim
+            persistentVolumeClaim:
+              claimName: dagewobot-pv-claim
           containers:
           - name: degewobot-cronjob
             image: europe-west3-docker.pkg.dev/degewobot/images/degewobot:latest
-            imagePullPolicy: IfNotPresent
+            imagePullPolicy: Always
             command: [ "python" ]
             args: [ "main.py" ]
+            volumeMounts:
+            - name: dagewobot-pv-claim
+              mountPath: /degewobot/data
             resources:
               limits:
                 cpu: 1
@@ -21,4 +30,4 @@ spec:
               requests:
                 cpu: 200m
                 memory: 128Mi
-          restartPolicy: OnFailure
+          restartPolicy: Never

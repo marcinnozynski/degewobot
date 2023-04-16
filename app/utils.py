@@ -19,8 +19,16 @@ def get_random_header() -> dict:
 
 
 class RequestHistory:
+
     def __init__(self):
-        self.con = sqlite3.connect("../database.db")
+        import os
+        from settings import DATABASE_FILE_PATH
+
+        if not os.path.exists(DATABASE_FILE_PATH):
+            print('Database file does not exist. Creating new one.')
+            os.mknod(DATABASE_FILE_PATH)
+
+        self.con = sqlite3.connect(DATABASE_FILE_PATH)
         self.init_db()
 
     def init_db(self):

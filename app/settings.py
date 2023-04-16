@@ -1,6 +1,7 @@
 from scraper import FormData, OfferConditions, SalutationEnum
 
 SCRAPEOPS_API_KEY = 'bb91da86-0296-423a-9875-d39c4ce9676b'
+DATABASE_FILE_PATH = '../data/database.db'
 
 FORM_DATA = FormData(
     first_name='Hans',
